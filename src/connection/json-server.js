@@ -10,7 +10,7 @@ export const getBooks = async () => {
 }
 
 
-export const getBookById = async (id) => {
+export const getOneBook = async (id) => {
     const response = await fetch(`${BASE_URL}/books/${id}`);
     if (!response.ok) {
         throw new Error(response.statusText);
