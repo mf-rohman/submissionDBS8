@@ -1,0 +1,26 @@
+{
+    "books": [
+        {
+            "id": 1,
+            "name": "The Lord of the Rings",
+            "year": 1954,
+            "author": "J.R.R. Tolkien",
+            "summary": "Lorem(10)",
+            "publisher": "Allen & Unwin",
+            "pageCount": 100,
+            "readPage": 100,
+            "reading": true
+        },
+        {
+            "id": 2,
+            "name": "Tempest",
+            "year": 2016,
+            "author": "Takumi Fujita",
+            "summary": "Lorem(10)",
+            "publisher": "Allen & Unwin",
+            "pageCount": 300,
+            "readPage": 300,
+            "reading": true
+        }
+    ]
+}
