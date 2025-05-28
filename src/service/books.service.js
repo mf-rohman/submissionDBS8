@@ -1,29 +1,24 @@
-import * as jsonServer from "../connection/json-server.js";
-import {v4 as uuidv4} from "uuid";
-import dayjs from "dayjs";
+import joi from 'joi';
 
-export const getAllBooks = async () => {
-   try {
-       const data = await jsonServer.getBooks();  
-       if (!data) {
-           return {
-            title: "Load All Data",
-            message: "Data Not Found",
-           }
-       }
-   } 
-   catch (err) {
-    console.log(`Error while load all books data: ${err}`);
-   }
-} 
+const bookSchema = joi.object({
+    name: joi.string().min(3).required(),
+    year: joi.number().integer().min(1450).max(new Date().getFullYear()).required(),
+    author: joi.string().min(3).max(100).required(),
+    summary: joi.string().min(3).max(100).required(),
+    publisher: joi.string().min(3).max(100).required(),
+    pageCount: joi.number().integer().min(1).required(),
+    readPage: joi.number().integer().required().min(1).max(joi.ref('pageCount')),
+    reading: joi.boolean().required(),
+});
 
+const validateBook = (payload) => {
+    const { error } = bookSchema.validate(payload);
+    if (error) {
+        throw new Error(`Validation error: ${error.message}`);
+    }
+    if (payload.readPage > payload.pageCount) {
+        throw new Error('Read page cannot be greater than total page count');
+    }
+}
 
-// export const getBookById = async (id) => {
-//     try {
-//         const data = await jsonServer.getOneBook(id);
-        
-//     }   
-//     catch {
-
-//     }
-// }
+export {validateBook};

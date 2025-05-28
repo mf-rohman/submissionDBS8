@@ -1,17 +1,14 @@
-import Hapi from "@hapi/hapi";
-import { getAllBooksHandler } from "./handler/booksHandler.js";
-// import booksRoutes from "./routes/booksRoutes.js";
+import Hapi from '@hapi/hapi';
+import dotenv from 'dotenv/config';
+import booksRoutes from './routes/booksRoutes.js';
 
-export const createServer = async () => {
+const init = async () => {
     const server = Hapi.server({
-        port : 9000,
-        host : "localhost",
+        port: process.env.PORT || 9000,
+        host: 'localhost',
     });
-    // console.log({booksRoutes});
-    server.route({
-        method: "GET",
-        path: "/books",
-        handler: getAllBooksHandler
-    });
+    server.route(booksRoutes);
     return server;
 }
+
+export default init;

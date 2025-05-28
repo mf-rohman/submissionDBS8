@@ -1,11 +1,10 @@
-import { createServer } from "./src/app.js";
+import init from "./src/app.js";
 
-
-const init = async () => {
-    const server = await createServer();
-    await server.start();
-
-    console.log(`Server running on ${server.info.uri}`);
-}
-
-init();
+init()
+    .then(server  => {
+        server.start();
+        console.log(`Server running on ${server.info.uri}`);  
+    })
+    .catch(err => {
+        console.error('Error starting server:', err);
+    }); 
