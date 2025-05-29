@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "7982d7a1-e75a-47da-8e13-1213db6d690c",
+		"_postman_id": "5891428b-8d00-407c-8355-5b9ae57592cf",
 		"name": "Bookshelf API Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "43670142"
+		"_exporter_id": "12297972"
 	},
 	"item": [
 		{
@@ -34,7 +34,7 @@
 							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('success');\r",
-							"    pm.expect(responseJson.message).to.equals('Book added successfully');\r",
+							"    pm.expect(responseJson.message).to.equals('Buku berhasil ditambahkan');\r",
 							"    pm.expect(responseJson.data).to.be.an('object');\r",
 							"});\r",
 							"\r",
@@ -48,8 +48,7 @@
 							"    pm.environment.set('bookId', data.bookId);\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -107,7 +106,7 @@
 							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('success');\r",
-							"    pm.expect(responseJson.message).to.equals('Book added successfully');\r",
+							"    pm.expect(responseJson.message).to.equals('Buku berhasil ditambahkan');\r",
 							"    pm.expect(responseJson.data).to.be.an('object');\r",
 							"});\r",
 							"\r",
@@ -121,8 +120,7 @@
 							"    pm.environment.set('bookIdWithFinishedReading', data.bookId);\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -180,11 +178,10 @@
 							"    pm.expect(responseJson).to.not.haveOwnProperty('data');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('fail');\r",
-							"    pm.expect(responseJson.message).to.equals('Validation error: \\\"name\\\" is required');\r",
+							"    pm.expect(responseJson.message).to.equals('Gagal menambahkan buku. Mohon isi nama buku');\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -242,11 +239,10 @@
 							"    pm.expect(responseJson).to.not.haveOwnProperty('data');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('fail');\r",
-							"    pm.expect(responseJson.message).to.equals('Validation error: \\\"readPage\\\" must be less than or equal to ref:pageCount');\r",
+							"    pm.expect(responseJson.message).to.equals('Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount');\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -557,11 +553,10 @@
 							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('fail');\r",
-							"    pm.expect(responseJson.message).to.equals('Book Not Found');\r",
+							"    pm.expect(responseJson.message).to.equals('Buku tidak ditemukan');\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -610,7 +605,7 @@
 							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('success');\r",
-							"    pm.expect(responseJson.message).to.equals('Book updated successfully');\r",
+							"    pm.expect(responseJson.message).to.equals('Buku berhasil diperbarui');\r",
 							"});\r",
 							"\r",
 							"pm.test('when get detail books', () => {\r",
@@ -648,8 +643,7 @@
 							"    });\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -708,11 +702,10 @@
 							"    pm.expect(responseJson).to.not.haveOwnProperty('data')\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('fail');\r",
-							"    pm.expect(responseJson.message).to.equals('Validation error: \\\"name\\\" is required');\r",
+							"    pm.expect(responseJson.message).to.equals('Gagal memperbarui buku. Mohon isi nama buku');\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -771,11 +764,10 @@
 							"    pm.expect(responseJson).to.not.haveOwnProperty('data');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('fail');\r",
-							"    pm.expect(responseJson.message).to.equals('Validation error: \\\"readPage\\\" must be less than or equal to ref:pageCount');\r",
+							"    pm.expect(responseJson.message).to.equals('Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount');\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -833,11 +825,10 @@
 							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('fail');\r",
-							"    pm.expect(responseJson.message).to.equals('Book not found');\r",
+							"    pm.expect(responseJson.message).to.equals('Gagal memperbarui buku. Id tidak ditemukan');\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -895,7 +886,7 @@
 							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('success');\r",
-							"    pm.expect(responseJson.message).to.equals('Book deleted successfully');\r",
+							"    pm.expect(responseJson.message).to.equals('Buku berhasil dihapus');\r",
 							"});\r",
 							"\r",
 							"pm.test('when get detail books', () => {\r",
@@ -906,8 +897,7 @@
 							"    });\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -956,7 +946,7 @@
 							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('success');\r",
-							"    pm.expect(responseJson.message).to.equals('Book deleted successfully');\r",
+							"    pm.expect(responseJson.message).to.equals('Buku berhasil dihapus');\r",
 							"});\r",
 							"\r",
 							"pm.test('when get detail books', () => {\r",
@@ -967,8 +957,7 @@
 							"    });\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -1017,11 +1006,10 @@
 							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
 							"\r",
 							"    pm.expect(responseJson.status).to.equals('fail');\r",
-							"    pm.expect(responseJson.message).to.equals('Book not found');\r",
+							"    pm.expect(responseJson.message).to.equals('Buku gagal dihapus. Id tidak ditemukan');\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
