@@ -4,21 +4,21 @@ import { validateBook } from '../service/books.service.js';
 
 const addBookHandler = (req, h) => {
     try {
-        validateBook(req.payload);
+        validateBook(req.payload, 'POST');
         const { name, year, author, summary, publisher, pageCount, readPage, reading } = req.payload;
         const id = uuidv4();
         const insertedAt = new Date().toISOString();
         const updatedAt = insertedAt;
         const finished = pageCount === readPage;
 
-
         bookRepository.addBook({
-            id, name, year, author, summary, publisher, pageCount, readPage, reading, finished, insertedAt, updatedAt
+            id, name, year, author, summary, publisher, pageCount,
+            readPage, reading, finished, insertedAt, updatedAt
         });
 
         return h.response({
             status: 'success',
-            message: 'Book added successfully',
+            message: 'Buku berhasil ditambahkan',
             data: { bookId: id }
         }).code(201);
     }
@@ -31,24 +31,27 @@ const addBookHandler = (req, h) => {
 }
 
 const getAllBooksHandler = (req, h) => {
-    const { finished } = req.query;
-    let books = bookRepository.getAllBooks()
-    console.log({ books });
-    if (finished == 1) {
-        books = books.filter((book) => {
-            return book.finished == finished
-        })
-            .map(({ id, name, publisher }) => ({ id, name, publisher }));
-    } else if (finished == 0) {
-        books = books.map(({ id, name, publisher }) => ({ id, name, publisher, }));
-        books.push({ id: 'id', name: 'name', publisher: 'publisher' });
-    } else {
-        books = books.map(({ id, name, publisher }) => ({ id, name, publisher, }));
+    const { reading, finished, name } = req.query;
+    let books = bookRepository.getAllBooks();
+
+    if (reading !== undefined) {
+        books = books.filter(book => book.reading == (reading === '1'));
     }
+    if (finished !== undefined) {
+        books = books.filter(book => book.finished == (finished === '1'));
+    }
+    if (name) {
+        const searchTerm = name.toLowerCase();
+        books = books.filter(book =>
+            book.name.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    const responseBooks = books.map(({ id, name, publisher }) => ({ id, name, publisher }));
 
     return h.response({
         status: 'success',
-        data: { books },
+        data: { books: responseBooks },
     }).code(200);
 }
 
@@ -59,7 +62,7 @@ const getAllBooksByIdHandler = (req, h) => {
     if (!book) {
         return h.response({
             status: 'fail',
-            message: 'Book Not Found'
+            message: 'Buku tidak ditemukan',
         }).code(404);
     }
     return h.response({
@@ -70,25 +73,32 @@ const getAllBooksByIdHandler = (req, h) => {
 
 const updateBookByIdHandler = (req, h) => {
     try {
-        validateBook(req.payload);
+        validateBook(req.payload, 'PUT');
         const { id } = req.params;
-        const updateExistingBook = bookRepository.updateBookById(id, req.payload);
+        const existingBook = bookRepository.getBookById(id);
 
-        if (!updateExistingBook) {
+        if (!existingBook) {
             return h.response({
                 status: 'fail',
-                message: 'Book not found'
+                message: 'Gagal memperbarui buku. Id tidak ditemukan'
             }).code(404);
         }
 
-        const updateAt = new Date().toISOString();
-        const finished = updateExistingBook.pageCount === updateExistingBook.readPage;
+        const updatedAt = new Date().toISOString();
+        const finished = req.payload.pageCount === req.payload.readPage;
 
-        const _update = bookRepository.updateBookById(id, { ...updateExistingBook, updateAt, finished });
+        const updatedBook = {
+            ...existingBook,
+            ...req.payload,
+            updatedAt,
+            finished
+        };
+
+        bookRepository.updateBookById(id, updatedBook);
+
         return h.response({
             status: 'success',
-            message: 'Book updated successfully',
-            data: { book: updateExistingBook }
+            message: 'Buku berhasil diperbarui'
         }).code(200);
     }
     catch (error) {
@@ -101,17 +111,17 @@ const updateBookByIdHandler = (req, h) => {
 
 const deleteBookByIdHandler = (req, h) => {
     const { id } = req.params;
-    const deletedBook = bookRepository.deleteBookById(id);
+    const isDeleted = bookRepository.deleteBookById(id);
 
-    if (!deletedBook) {
+    if (!isDeleted) {
         return h.response({
             status: 'fail',
-            message: 'Book not found'
+            message: 'Buku gagal dihapus. Id tidak ditemukan'
         }).code(404);
     }
     return h.response({
         status: 'success',
-        message: 'Book deleted successfully'
+        message: 'Buku berhasil dihapus'
     }).code(200);
 }
 
@@ -122,3 +132,5 @@ export {
     updateBookByIdHandler,
     deleteBookByIdHandler
 };
+
+
